@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trading History - Perpguin</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <nav>
+                <div class="logo">
+                    <span class="penguin-icon">🐧</span>
+                    <span>PERPGUIN</span>
+                </div>
+                <div class="nav-links">
+                    <a href="index.html">Home</a>
+                    <a href="index.html#about">About</a>
+                    <a href="index.html#tech">Technology</a>
+                    <a href="#history">History</a>
+                </div>
+            </nav>
+        </header>
+
+        <main class="history-container">
+            <div class="history-header">
+                <h1>TRADING HISTORY</h1>
+                <p class="tagline">Past 7 days performance analysis</p>
+            </div>
+
+            <div class="history-stats">
+                <div class="stat-item">
+                    <span class="stat-value">67.3%</span>
+                    <span class="stat-label">WIN RATE</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-value">2.31:1</span>
+                    <span class="stat-label">RISK/REWARD</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-value">142</span>
+                    <span class="stat-label">TOTAL SIGNALS</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-value">+23.7%</span>
+                    <span class="stat-label">WEEKLY ROI</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-value">96</span>
+                    <span class="stat-label">WINS</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-value">46</span>
+                    <span class="stat-label">LOSSES</span>
+                </div>
+            </div>
+
+            <section class="section">
+                <h3>RECENT SIGNALS</h3>
+                <div class="table-container">
+                    <table class="trades-table" id="tradesTable">
+                        <thead>
+                            <tr>
+                                <th>TIMESTAMP</th>
+                                <th>ASSET</th>
+                                <th>SIGNAL</th>
+                                <th>ENTRY</th>
+                                <th>EXIT</th>
+                                <th>LEVERAGE</th>
+                                <th>PNL</th>
+                                <th>CONFIDENCE</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Data will be populated by JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section class="section">
+                <h3>ALGORITHM INSIGHTS</h3>
+                <div class="grid">
+                    <div class="card">
+                        <h4>Technical Analysis</h4>
+                        <p>RSI, MACD, and Bollinger Bands confluence with 15-minute timeframe analysis. Jupiter API provides real-time price feeds for accurate signal generation.</p>
+                    </div>
+                    <div class="card">
+                        <h4>Sentiment Scoring</h4>
+                        <p>News sentiment analysis from 47 crypto news sources, Twitter sentiment tracking, and on-chain activity correlation for comprehensive market sentiment.</p>
+                    </div>
+                    <div class="card">
+                        <h4>Risk Management</h4>
+                        <p>Dynamic position sizing based on volatility, maximum 3% risk per trade, and automated stop-loss placement at 1.5x ATR below entry.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section">
+                <h3>PERFORMANCE BREAKDOWN</h3>
+                <div class="performance-details">
+                    <div class="performance-item">
+                        <span class="performance-label">Best Trade:</span>
+                        <span class="performance-value pnl-positive">+47.3% (SOL LONG 5x)</span>
+                    </div>
+                    <div class="performance-item">
+                        <span class="performance-label">Worst Trade:</span>
+                        <span class="performance-value pnl-negative">-12.1% (BONK SHORT 3x)</span>
+                    </div>
+                    <div class="performance-item">
+                        <span class="performance-label">Average Win:</span>
+                        <span class="performance-value pnl-positive">+8.7%</span>
+                    </div>
+                    <div class="performance-item">
+                        <span class="performance-label">Average Loss:</span>
+                        <span class="performance-value pnl-negative">-3.8%</span>
+                    </div>
+                    <div class="performance-item">
+                        <span class="performance-label">Max Drawdown:</span>
+                        <span class="performance-value">-5.2%</span>
+                    </div>
+                    <div class="performance-item">
+                        <span class="performance-label">Sharpe Ratio:</span>
+                        <span class="performance-value">2.84</span>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <div class="footer-content">
+                <p>&copy; 2025 Perpguin. Automated perpetual futures analysis system.</p>
+                <div class="social-links">
+                    <a href="#" class="social-link">Twitter</a>
+                    <a href="#" class="social-link">Discord</a>
+                    <a href="#" class="social-link">GitHub</a>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script src="history.js"></script>
+</body>
+</html>

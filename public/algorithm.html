@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Algorithm - Perpguin</title>
+    <link rel="icon" type="image/png" href="perpguin_profile_picture.png">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <nav>
+                <div class="logo">
+                    <img src="perpguin_logo.png" alt="Perpguin Logo" class="logo-img">
+                    <span>PERPGUIN</span>
+                </div>
+                <div class="nav-links">
+                    <a href="/">Home</a>
+                    <a href="/algorithm">Algorithm</a>
+                    <a href="https://x.com/perpguin" class="twitter-btn">Twitter Alerts</a>
+                </div>
+            </nav>
+        </header>
+
+        <main>
+            <section class="algorithm-header">
+                <h1>ALGORITHM OVERVIEW</h1>
+                <div class="algorithm-intro">
+                    <p>The Perpguin algorithm combines technical analysis, sentiment processing, and order flow data to identify high-probability trading opportunities in perpetual futures markets. The system processes multiple data streams in real-time, including live intelligence from news sources and social media events, to generate high-confidence signals. By continuously monitoring Twitter sentiment, Reddit discussions, news headlines, and influencer posts, the algorithm captures market-moving information as it happens, applying weighted scoring mechanisms and generating signals only when confidence thresholds are met, ensuring consistent risk management across all trades.</p>
+                </div>
+            </section>
+
+            <section id="tech" class="section">
+                <h3>ALGORITHM COMPONENTS</h3>
+                
+                <div class="code-snippet">
+                    <h4>Main Algorithm - Signal Generation</h4>
+                    <pre><code><span class="comment">// Core perpetual signal generation algorithm</span>
+<span class="keyword">const</span> <span class="function">generateSignal</span> = <span class="keyword">async</span> (<span class="variable">asset</span><span class="operator">:</span> <span class="keyword">string</span>) <span class="operator">=></span> {
+  <span class="keyword">const</span> <span class="variable">technicalScore</span> = <span class="keyword">await</span> <span class="function">analyzeTechnicals</span>(<span class="variable">asset</span>);
+  <span class="keyword">const</span> <span class="variable">sentimentScore</span> = <span class="keyword">await</span> <span class="function">analyzeSentiment</span>(<span class="variable">asset</span>);
+  <span class="keyword">const</span> <span class="variable">volumeScore</span> = <span class="keyword">await</span> <span class="function">analyzeOrderFlow</span>(<span class="variable">asset</span>);
+  
+  <span class="keyword">const</span> <span class="variable">compositeScore</span> = (<span class="variable">technicalScore</span> <span class="operator">*</span> <span class="number">0.5</span>) <span class="operator">+</span> 
+                         (<span class="variable">sentimentScore</span> <span class="operator">*</span> <span class="number">0.3</span>) <span class="operator">+</span> 
+                         (<span class="variable">volumeScore</span> <span class="operator">*</span> <span class="number">0.2</span>);
+  
+  <span class="keyword">const</span> <span class="variable">signal</span> = <span class="variable">compositeScore</span> <span class="operator">></span> <span class="number">0.7</span> <span class="operator">?</span> <span class="string">'LONG'</span> <span class="operator">:</span> 
+                 <span class="variable">compositeScore</span> <span class="operator"><</span> <span class="operator">-</span><span class="number">0.7</span> <span class="operator">?</span> <span class="string">'SHORT'</span> <span class="operator">:</span> <span class="string">'NEUTRAL'</span>;
+  
+  <span class="keyword">const</span> <span class="variable">confidence</span> = <span class="variable">Math</span>.<span class="function">abs</span>(<span class="variable">compositeScore</span>);
+  <span class="keyword">const</span> <span class="variable">leverage</span> = <span class="function">calculateLeverage</span>(<span class="variable">confidence</span>, <span class="variable">volatility</span>);
+  
+  <span class="keyword">return</span> {
+    <span class="variable">asset</span>,
+    <span class="variable">signal</span>,
+    <span class="variable">confidence</span>: <span class="variable">Math</span>.<span class="function">round</span>(<span class="variable">confidence</span> <span class="operator">*</span> <span class="number">100</span>),
+    <span class="variable">leverage</span>,
+    <span class="variable">entry</span>: <span class="function">getCurrentPrice</span>(<span class="variable">asset</span>),
+    <span class="variable">stopLoss</span>: <span class="function">calculateStopLoss</span>(<span class="variable">signal</span>, <span class="variable">volatility</span>),
+    <span class="variable">takeProfit</span>: <span class="function">calculateTakeProfit</span>(<span class="variable">signal</span>, <span class="variable">confidence</span>)
+  };
+};</code></pre>
+                </div>
+
+                <div class="code-snippet">
+                    <h4>Live Intelligence - News & Social Sentiment</h4>
+                    <pre><code><span class="comment">// Real-time sentiment analysis from multiple sources</span>
+<span class="keyword">const</span> <span class="function">analyzeSentiment</span> = <span class="keyword">async</span> (<span class="variable">asset</span><span class="operator">:</span> <span class="keyword">string</span>) <span class="operator">=></span> {
+  <span class="keyword">const</span> <span class="variable">sources</span> = [
+    <span class="keyword">await</span> <span class="function">scrapeTwitterSentiment</span>(<span class="variable">asset</span>),
+    <span class="keyword">await</span> <span class="function">parseNewsHeadlines</span>(<span class="variable">asset</span>),
+    <span class="keyword">await</span> <span class="function">analyzeRedditMentions</span>(<span class="variable">asset</span>),
+    <span class="keyword">await</span> <span class="function">checkInfluencerPosts</span>(<span class="variable">asset</span>)
+  ];
+  
+  <span class="keyword">let</span> <span class="variable">bullishSignals</span> = <span class="number">0</span>;
+  <span class="keyword">let</span> <span class="variable">bearishSignals</span> = <span class="number">0</span>;
+  <span class="keyword">let</span> <span class="variable">totalWeight</span> = <span class="number">0</span>;
+  
+  <span class="variable">sources</span>.<span class="function">forEach</span>(<span class="variable">source</span> <span class="operator">=></span> {
+    <span class="keyword">const</span> <span class="variable">weight</span> = <span class="variable">source</span>.<span class="variable">credibility</span> <span class="operator">*</span> <span class="variable">source</span>.<span class="variable">reach</span>;
+    <span class="variable">totalWeight</span> <span class="operator">+=</span> <span class="variable">weight</span>;
+    
+    <span class="keyword">if</span> (<span class="variable">source</span>.<span class="variable">sentiment</span> <span class="operator">></span> <span class="number">0.6</span>) {
+      <span class="variable">bullishSignals</span> <span class="operator">+=</span> <span class="variable">weight</span> <span class="operator">*</span> <span class="variable">source</span>.<span class="variable">sentiment</span>;
+    } <span class="keyword">else if</span> (<span class="variable">source</span>.<span class="variable">sentiment</span> <span class="operator"><</span> <span class="operator">-</span><span class="number">0.6</span>) {
+      <span class="variable">bearishSignals</span> <span class="operator">+=</span> <span class="variable">weight</span> <span class="operator">*</span> <span class="variable">Math</span>.<span class="function">abs</span>(<span class="variable">source</span>.<span class="variable">sentiment</span>);
+    }
+  });
+  
+  <span class="keyword">const</span> <span class="variable">netSentiment</span> = (<span class="variable">bullishSignals</span> <span class="operator">-</span> <span class="variable">bearishSignals</span>) <span class="operator">/</span> <span class="variable">totalWeight</span>;
+  
+  <span class="keyword">return</span> {
+    <span class="variable">score</span>: <span class="variable">netSentiment</span>,
+    <span class="variable">confidence</span>: <span class="variable">Math</span>.<span class="function">min</span>(<span class="variable">totalWeight</span> <span class="operator">/</span> <span class="number">100</span>, <span class="number">1</span>),
+    <span class="variable">sources</span>: <span class="variable">sources</span>.<span class="variable">length</span>
+  };
+};</code></pre>
+                </div>
+
+                <div class="code-snippet">
+                    <h4>Technical Analysis - Order Flow & Volume</h4>
+                    <pre><code><span class="comment">// Advanced technical analysis with order flow and volume</span>
+<span class="keyword">const</span> <span class="function">analyzeTechnicals</span> = <span class="keyword">async</span> (<span class="variable">asset</span><span class="operator">:</span> <span class="keyword">string</span>) <span class="operator">=></span> {
+  <span class="keyword">const</span> <span class="variable">candles</span> = <span class="keyword">await</span> <span class="function">getCandles</span>(<span class="variable">asset</span>, <span class="string">'15m'</span>, <span class="number">100</span>);
+  <span class="keyword">const</span> <span class="variable">orderBook</span> = <span class="keyword">await</span> <span class="function">getOrderBook</span>(<span class="variable">asset</span>);
+  <span class="keyword">const</span> <span class="variable">volumeProfile</span> = <span class="keyword">await</span> <span class="function">getVolumeProfile</span>(<span class="variable">asset</span>);
+  
+  <span class="comment">// RSI and MACD confluence</span>
+  <span class="keyword">const</span> <span class="variable">rsi</span> = <span class="function">calculateRSI</span>(<span class="variable">candles</span>, <span class="number">14</span>);
+  <span class="keyword">const</span> <span class="variable">macd</span> = <span class="function">calculateMACD</span>(<span class="variable">candles</span>, <span class="number">12</span>, <span class="number">26</span>, <span class="number">9</span>);
+  <span class="keyword">const</span> <span class="variable">bollinger</span> = <span class="function">calculateBollingerBands</span>(<span class="variable">candles</span>, <span class="number">20</span>, <span class="number">2</span>);
+  
+  <span class="comment">// Order flow analysis</span>
+  <span class="keyword">const</span> <span class="variable">bidAskRatio</span> = <span class="variable">orderBook</span>.<span class="variable">bids</span>.<span class="variable">total</span> <span class="operator">/</span> <span class="variable">orderBook</span>.<span class="variable">asks</span>.<span class="variable">total</span>;
+  <span class="keyword">const</span> <span class="variable">volumeWeightedPrice</span> = <span class="function">calculateVWAP</span>(<span class="variable">candles</span>, <span class="variable">volumeProfile</span>);
+  <span class="keyword">const</span> <span class="variable">orderFlowImbalance</span> = <span class="function">calculateOrderFlowImbalance</span>(<span class="variable">orderBook</span>);
+  
+  <span class="comment">// Support/Resistance levels</span>
+  <span class="keyword">const</span> <span class="variable">keyLevels</span> = <span class="function">identifyKeyLevels</span>(<span class="variable">candles</span>, <span class="variable">volumeProfile</span>);
+  <span class="keyword">const</span> <span class="variable">currentPrice</span> = <span class="variable">candles</span>[<span class="variable">candles</span>.<span class="variable">length</span> <span class="operator">-</span> <span class="number">1</span>].<span class="variable">close</span>;
+  <span class="keyword">const</span> <span class="variable">levelProximity</span> = <span class="function">calculateLevelProximity</span>(<span class="variable">currentPrice</span>, <span class="variable">keyLevels</span>);
+  
+  <span class="comment">// Composite technical score</span>
+  <span class="keyword">const</span> <span class="variable">technicalScore</span> = (
+    (<span class="variable">rsi</span> <span class="operator">></span> <span class="number">70</span> <span class="operator">?</span> <span class="operator">-</span><span class="number">0.3</span> <span class="operator">:</span> <span class="variable">rsi</span> <span class="operator"><</span> <span class="number">30</span> <span class="operator">?</span> <span class="number">0.3</span> <span class="operator">:</span> <span class="number">0</span>) <span class="operator">+</span>
+    (<span class="variable">macd</span>.<span class="variable">signal</span> <span class="operator">></span> <span class="number">0</span> <span class="operator">?</span> <span class="number">0.2</span> <span class="operator">:</span> <span class="operator">-</span><span class="number">0.2</span>) <span class="operator">+</span>
+    (<span class="variable">bidAskRatio</span> <span class="operator">></span> <span class="number">1.2</span> <span class="operator">?</span> <span class="number">0.2</span> <span class="operator">:</span> <span class="variable">bidAskRatio</span> <span class="operator"><</span> <span class="number">0.8</span> <span class="operator">?</span> <span class="operator">-</span><span class="number">0.2</span> <span class="operator">:</span> <span class="number">0</span>) <span class="operator">+</span>
+    (<span class="variable">orderFlowImbalance</span> <span class="operator">*</span> <span class="number">0.3</span>) <span class="operator">+</span>
+    (<span class="variable">levelProximity</span> <span class="operator">*</span> <span class="number">0.2</span>)
+  );
+  
+  <span class="keyword">return</span> {
+    <span class="variable">score</span>: <span class="variable">Math</span>.<span class="function">max</span>(<span class="operator">-</span><span class="number">1</span>, <span class="variable">Math</span>.<span class="function">min</span>(<span class="number">1</span>, <span class="variable">technicalScore</span>)),
+    <span class="variable">rsi</span>,
+    <span class="variable">macd</span>: <span class="variable">macd</span>.<span class="variable">signal</span>,
+    <span class="variable">orderFlow</span>: <span class="variable">orderFlowImbalance</span>,
+    <span class="variable">keyLevels</span>
+  };
+};</code></pre>
+                </div>
+            </section>
+
+        </main>
+
+        <footer>
+            <div class="footer-content">
+                <p>&copy; 2025 Perpguin. Automated perpetual futures analysis system.</p>
+                <div class="social-links">
+                    <a href="https://x.com/perpguin" class="social-link">Twitter</a>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
