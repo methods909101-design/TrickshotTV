@@ -336,6 +336,99 @@ document.addEventListener('DOMContentLoaded', function() {
         document.head.appendChild(script);
     }
 
+    // Count-up animation for metrics
+    function animateMetrics() {
+        const metrics = document.querySelectorAll('.metric-value');
+        
+        metrics.forEach(metric => {
+            const text = metric.textContent;
+            const label = metric.nextElementSibling.textContent;
+            
+            // Extract numeric value and format
+            let targetValue, suffix = '', prefix = '';
+            
+            if (text.includes('%')) {
+                targetValue = parseFloat(text.replace('%', ''));
+                suffix = '%';
+            } else if (text.includes('+')) {
+                targetValue = parseFloat(text.replace('+', '').replace('%', ''));
+                prefix = '+';
+                suffix = '%';
+            } else if (label === 'Risk/Reward') {
+                targetValue = parseFloat(text);
+                suffix = '';
+            } else {
+                targetValue = parseFloat(text);
+                suffix = '';
+            }
+            
+            if (isNaN(targetValue)) return;
+            
+            // Animate the value
+            const duration = 2000; // 2 seconds
+            const startTime = performance.now();
+            
+            function updateValue(currentTime) {
+                const elapsed = currentTime - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+                
+                // Easing function for smooth animation
+                const easeOut = 1 - Math.pow(1 - progress, 3);
+                const currentValue = targetValue * easeOut;
+                
+                // Format the display value
+                let displayValue = '';
+                if (suffix === '%') {
+                    displayValue = `${prefix}${currentValue.toFixed(1)}${suffix}`;
+                } else if (label === 'Risk/Reward') {
+                    displayValue = currentValue.toFixed(2);
+                } else {
+                    displayValue = `${prefix}${Math.floor(currentValue)}${suffix}`;
+                }
+                
+                metric.textContent = displayValue;
+                
+                if (progress < 1) {
+                    requestAnimationFrame(updateValue);
+                } else {
+                    // Set final value
+                    metric.textContent = text;
+                }
+            }
+            
+            // Start with 0 and animate up
+            if (suffix === '%') {
+                metric.textContent = `${prefix}0${suffix}`;
+            } else if (label === 'Risk/Reward') {
+                metric.textContent = '0.00';
+            } else {
+                metric.textContent = `${prefix}0${suffix}`;
+            }
+            
+            requestAnimationFrame(updateValue);
+        });
+    }
+
+    // Observe metrics section for animation trigger
+    function observeMetrics() {
+        const metricsSection = document.querySelector('.performance-metrics');
+        if (!metricsSection) return;
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    setTimeout(animateMetrics, 300);
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.3 });
+
+        observer.observe(metricsSection);
+    }
+
+    // Initialize metrics animation
+    observeMetrics();
+
     // Start initialization
     loadTradingViewScript();
 
