@@ -267,6 +267,6 @@ app.get('/api/trade/:id', (req, res) => {
     }
 });
 
-app.listen(PORT, () => {
-    console.log(`Perpguin server running on http://localhost:${PORT}`);
+app.listen(PORT, '0.0.0.0', () => {
+    console.log(`Perpguin server running on port ${PORT}`);
 });
