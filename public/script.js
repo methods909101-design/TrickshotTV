@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', function() {
             console.error('Error loading statistics:', error);
             // Fallback to default animation
             animateMetric('Win Rate (7d)', '67.3', '%');
-            animateMetric('Risk/Reward', '1.84', ':1');
+            animateMetric('Risk/Reward', '2.11', ':1');
         }
     }
 
