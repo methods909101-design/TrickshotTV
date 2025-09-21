@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perpguin - Automated Perpetuals Analyst</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <nav>
+                <div class="logo">
+                    <div class="penguin-logo">
+                        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                            <ellipse cx="50" cy="75" rx="35" ry="25"/>
+                            <ellipse cx="50" cy="45" rx="25" ry="35"/>
+                            <ellipse cx="50" cy="35" rx="20" ry="25"/>
+                            <ellipse cx="42" cy="30" rx="3" ry="4" fill="#000"/>
+                            <ellipse cx="58" cy="30" rx="3" ry="4" fill="#000"/>
+                            <path d="M45 35 Q50 40 55 35" stroke="#000" stroke-width="2" fill="none"/>
+                        </svg>
+                    </div>
+                    <span>PERPGUIN</span>
+                </div>
+                <div class="nav-links">
+                    <a href="#about">About</a>
+                    <a href="#trades">Trades</a>
+                    <a href="#" class="twitter-btn">Twitter Alerts</a>
+                </div>
+            </nav>
+        </header>
+
+        <main>
+            <section class="hero">
+                <div class="hero-content">
+                    <h1>PERPGUIN</h1>
+                    <h2>Automated Perpetuals Analyst</h2>
+                    <p class="tagline">AI-driven perpetual futures analysis for major cryptocurrencies<br>
+                    <strong>Live alerts available on Twitter</strong></p>
+                    
+                    <div class="performance-metrics">
+                        <div class="metrics-grid">
+                            <div class="metric">
+                                <span class="metric-value">67.3%</span>
+                                <span class="metric-label">Win Rate (7d)</span>
+                            </div>
+                            <div class="metric">
+                                <span class="metric-value">2:17</span>
+                                <span class="metric-label">Risk/Reward</span>
+                            </div>
+                            <div class="metric">
+                                <span class="metric-value">+23.7%</span>
+                                <span class="metric-label">Weekly ROI</span>
+                            </div>
+                            <div class="metric">
+                                <span class="metric-value">142</span>
+                                <span class="metric-label">Signals Generated</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="about" class="section">
+                <h3>ABOUT PERPGUIN</h3>
+                <div class="about-content" style="text-align: center;">
+                    <p>Perpguin is an advanced algorithmic trading system designed specifically for perpetual futures markets on Solana. Our AI-driven approach combines multiple data sources and sophisticated analysis techniques to identify high-probability trading opportunities.</p>
+                    
+                    <p>The system operates on three core principles: technical analysis of price action and market structure, sentiment analysis from news sources and social media, and risk management through dynamic position sizing. Each signal is generated through a confluence of these factors, ensuring only the highest quality setups are executed.</p>
+                    
+                    <p>Our proprietary algorithm processes market data in real-time, analyzing order flow, volume patterns, and price action across multiple timeframes. The system maintains strict risk parameters, never risking more than 3% of capital per trade, and employs sophisticated stop-loss mechanisms based on market volatility.</p>
+                    
+                    <p>Perpguin's edge comes from its ability to process vast amounts of information instantaneously - from technical indicators and chart patterns to breaking news sentiment and on-chain activity. This multi-dimensional approach allows us to maintain our consistent performance metrics while adapting to changing market conditions.</p>
+                </div>
+            </section>
+
+            <section id="tech" class="section">
+                <h3>ALGORITHM COMPONENTS</h3>
+                
+                <div class="code-snippet">
+                    <h4>Main Algorithm - Signal Generation</h4>
+                    <pre><code>// Core perpetual signal generation algorithm
+const generateSignal = async (asset: string) => {
+  const technicalScore = await analyzeTechnicals(asset);
+  const sentimentScore = await analyzeSentiment(asset);
+  const volumeScore = await analyzeOrderFlow(asset);
+  
+  const compositeScore = (technicalScore * 0.5) + 
+                         (sentimentScore * 0.3) + 
+                         (volumeScore * 0.2);
+  
+  const signal = compositeScore > 0.7 ? 'LONG' : 
+                 compositeScore < -0.7 ? 'SHORT' : 'NEUTRAL';
+  
+  const confidence = Math.abs(compositeScore);
+  const leverage = calculateLeverage(confidence, volatility);
+  
+  return {
+    asset,
+    signal,
+    confidence: Math.round(confidence * 100),
+    leverage,
+    entry: getCurrentPrice(asset),
+    stopLoss: calculateStopLoss(signal, volatility),
+    takeProfit: calculateTakeProfit(signal, confidence)
+  };
+};</code></pre>
+                </div>
+
+                <div class="code-snippet">
+                    <h4>Live Intelligence - News & Social Sentiment</h4>
+                    <pre><code>// Real-time sentiment analysis from multiple sources
+const analyzeSentiment = async (asset: string) => {
+  const sources = [
+    await scrapeTwitterSentiment(asset),
+    await parseNewsHeadlines(asset),
+    await analyzeRedditMentions(asset),
+    await checkInfluencerPosts(asset)
+  ];
+  
+  let bullishSignals = 0;
+  let bearishSignals = 0;
+  let totalWeight = 0;
+  
+  sources.forEach(source => {
+    const weight = source.credibility * source.reach;
+    totalWeight += weight;
+    
+    if (source.sentiment > 0.6) {
+      bullishSignals += weight * source.sentiment;
+    } else if (source.sentiment < -0.6) {
+      bearishSignals += weight * Math.abs(source.sentiment);
+    }
+  });
+  
+  const netSentiment = (bullishSignals - bearishSignals) / totalWeight;
+  
+  return {
+    score: netSentiment,
+    confidence: Math.min(totalWeight / 100, 1),
+    sources: sources.length
+  };
+};</code></pre>
+                </div>
+
+                <div class="code-snippet">
+                    <h4>Technical Analysis - Order Flow & Volume</h4>
+                    <pre><code>// Advanced technical analysis with order flow and volume
+const analyzeTechnicals = async (asset: string) => {
+  const candles = await getCandles(asset, '15m', 100);
+  const orderBook = await getOrderBook(asset);
+  const volumeProfile = await getVolumeProfile(asset);
+  
+  // RSI and MACD confluence
+  const rsi = calculateRSI(candles, 14);
+  const macd = calculateMACD(candles, 12, 26, 9);
+  const bollinger = calculateBollingerBands(candles, 20, 2);
+  
+  // Order flow analysis
+  const bidAskRatio = orderBook.bids.total / orderBook.asks.total;
+  const volumeWeightedPrice = calculateVWAP(candles, volumeProfile);
+  const orderFlowImbalance = calculateOrderFlowImbalance(orderBook);
+  
+  // Support/Resistance levels
+  const keyLevels = identifyKeyLevels(candles, volumeProfile);
+  const currentPrice = candles[candles.length - 1].close;
+  const levelProximity = calculateLevelProximity(currentPrice, keyLevels);
+  
+  // Composite technical score
+  const technicalScore = (
+    (rsi > 70 ? -0.3 : rsi < 30 ? 0.3 : 0) +
+    (macd.signal > 0 ? 0.2 : -0.2) +
+    (bidAskRatio > 1.2 ? 0.2 : bidAskRatio < 0.8 ? -0.2 : 0) +
+    (orderFlowImbalance * 0.3) +
+    (levelProximity * 0.2)
+  );
+  
+  return {
+    score: Math.max(-1, Math.min(1, technicalScore)),
+    rsi,
+    macd: macd.signal,
+    orderFlow: orderFlowImbalance,
+    keyLevels
+  };
+};</code></pre>
+                </div>
+            </section>
+
+            <section id="trades" class="section">
+                <h3>TRADING ACTIVITY</h3>
+                
+                <div class="trades-sections">
+                    <div class="active-trades">
+                        <h4>ACTIVE POSITIONS</h4>
+                        <table class="trades-table" id="activeTradesTable">
+                            <thead>
+                                <tr>
+                                    <th>ASSET</th>
+                                    <th>SIGNAL</th>
+                                    <th>ENTRY</th>
+                                    <th>CURRENT</th>
+                                    <th>LEVERAGE</th>
+                                    <th>UNREALIZED PNL</th>
+                                    <th>CONFIDENCE</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Data will be populated by JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="historic-trades">
+                        <h4>RECENT HISTORY</h4>
+                        <table class="trades-table" id="historicTradesTable">
+                            <thead>
+                                <tr>
+                                    <th>TIMESTAMP</th>
+                                    <th>ASSET</th>
+                                    <th>SIGNAL</th>
+                                    <th>ENTRY</th>
+                                    <th>EXIT</th>
+                                    <th>LEVERAGE</th>
+                                    <th>PNL</th>
+                                    <th>CONFIDENCE</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Data will be populated by JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+
+        <footer>
+            <div class="footer-content">
+                <p>&copy; 2025 Perpguin. Automated perpetual futures analysis system.</p>
+                <div class="social-links">
+                    <a href="#" class="social-link">Twitter</a>
+                    <a href="#" class="social-link">Discord</a>
+                    <a href="#" class="social-link">GitHub</a>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- History Modal -->
+    <div id="historyModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>TRADING HISTORY & ANALYSIS</h2>
+            
+            <div class="history-stats">
+                <div class="stat-item">
+                    <span class="stat-value">67.3%</span>
+                    <span class="stat-label">WIN RATE</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-value">2:17</span>
+                    <span class="stat-label">RISK/REWARD</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-value">142</span>
+                    <span class="stat-label">TOTAL SIGNALS</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-value">+23.7%</span>
+                    <span class="stat-label">WEEKLY ROI</span>
+                </div>
+            </div>
+
+            <div class="chart-container">
+                <div class="chart-placeholder">
+                    📈 PRICE CHART WITH ENTRY/EXIT MARKERS
+                    <br><br>
+                    [Simulated Trading Chart View]
+                    <br>
+                    Green dots = Entry points | Red dots = Exit points
+                </div>
+                <div class="trade-markers">
+                    <div class="entry-marker" style="left: 20%; top: 60%;"></div>
+                    <div class="exit-marker" style="left: 35%; top: 40%;"></div>
+                    <div class="entry-marker" style="left: 50%; top: 70%;"></div>
+                    <div class="exit-marker" style="left: 65%; top: 30%;"></div>
+                    <div class="entry-marker" style="left: 80%; top: 55%;"></div>
+                    <div class="exit-marker" style="left: 90%; top: 25%;"></div>
+                </div>
+            </div>
+
+            <div class="confidence-scale">
+                <span>Confidence Scale:</span>
+                <div class="confidence-bar">
+                    <div class="confidence-indicator" style="left: 75%;"></div>
+                </div>
+                <span>85%</span>
+            </div>
+
+            <table class="trades-table" id="modalTradesTable">
+                <thead>
+                    <tr>
+                        <th>TIMESTAMP</th>
+                        <th>ASSET</th>
+                        <th>SIGNAL</th>
+                        <th>ENTRY</th>
+                        <th>EXIT</th>
+                        <th>LEVERAGE</th>
+                        <th>PNL</th>
+                        <th>CONFIDENCE</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Data will be populated by JavaScript -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
