@@ -49,3 +49,12 @@ coverage/
 # Temporary folders
 tmp/
 temp/
+
+# Large installer files
+*.exe
+GitHubDesktopSetup-x64.exe
+
+# Other large files
+*.dmg
+*.pkg
+*.msi
